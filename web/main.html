@@ -1,97 +1,43 @@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
+<!DOCTYPE html>
 <html>
-	<head>
-	</head>
-	<body onload='showAll();'>
-		<script>
-		
-			function showAll() {
-				var settings = {
-					"url": "http://localhost:8080/students",
-					"method": "GET",
-					"timeout": 0,
-					"processData": false,
-					"mimeType": "multipart/form-data",
-					"contentType": false
-				};
-				$.ajax(settings).done(function (response) {
-					updateTable(response);
-				});
-			}
+  <head>
+    <style>
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100vh;
+      }
 
-			function updateTable(json) {
-				result = jQuery.parseJSON(json);
-				var table = document.getElementById("resultsTable");
-				
-				var rowCount = table.rows.length;
-				for (var i = rowCount - 1; i > 0; i--) {
-					table.deleteRow(i);
-				}				
-				
-				for(var k in result) {
-					var student = result[k];
-					name = student.name;
-					age = student.age;
-					loc = student.location;
-					var row = table.insertRow(-1);
-					var cell1 = row.insertCell(0);
-					var cell2 = row.insertCell(1);
-					var cell3 = row.insertCell(2);
-					cell1.innerHTML = name;
-					cell2.innerHTML = age;
-					cell3.innerHTML = loc;
-				} 
-			}
+      .button {
+        background-color: rgb(65, 103, 173);
+        border-radius: 10px;
+        color: white;
+        display: inline-block;
+        font-size: 24px;
+        text-align: center;
+		margin:25px;
+		padding-top:15px;
+		padding-bottom:15px;
+		padding-left:10px;
+		padding-right:10px;
+      }
 
-			function addStudent() {		
-				var settings = {
-				  "url": "http://localhost:8080/addStudent",
-				  "method": "POST",
-				  "timeout": 0,
-				  "headers": {
-					"Content-Type": "application/json"
-				  },
-				  "data": JSON.stringify({
-					"name": document.getElementById("name").value,
-					"age": document.getElementById("age").value,
-					"location": document.getElementById("location").value
-				  }),
-				};
+      button {
+        margin: 10px;
 
-				$.ajax(settings).done(function (response) {
-					showAll();
-				});
-			}
-		
-		</script>	
-		
-		<h1> Existing Students </h1>
-		<table border='1' id='resultsTable'>
-			<tr>
-				<th width='200'> Name </th>
-				<th width='200'> Age </th>
-				<th width='200'> Location </th>
-			</tr>
-		</table>
-
-		<br><br>
-
-		<table>
-			<tr>
-				<td> Name: </td>
-				<td> <input type='text' id='name' />
-			</tr>
-			<tr>
-				<td> Age: </td>
-				<td> <input type='text' id='age' />
-			</tr>
-			<tr>
-				<td> Location: </td>
-				<td> <input type='text' id='location' />
-			</tr>
-		</table>
-		<button name='addStudent' onclick="addStudent();"> Add Student </button>		
-		
-	</body>
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Κεντρική σελίδα εμβολιασμού</h1>
+      <div class="buttons">
+		<button type="button" class="button" onclick="window.location.href='./citizen/welcome.html'">Είμαι Πολίτης</button>
+		<button type="button" class="button" onclick="window.location.href='./doctor/welcome.html'">Είμαι Γιατρός</button>
+	  </div>
+      </div>
+    </div>
+  </body>
 </html>
+

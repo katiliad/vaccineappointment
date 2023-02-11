@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .button {
+        background-color: rgb(65, 103, 173);
+        border-radius: 10px;
+        color: white;
+        display: inline-block;
+        font-size: 24px;
+        text-align: center;
+		margin:25px;
+		padding-top:15px;
+		padding-bottom:15px;
+		padding-left:10px;
+		padding-right:10px;
+      }
+
+      .home_button{
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: rgb(6, 70, 17);
+        border-radius: 15px;
+        padding:10px;
+        color: white;
+        display: inline-block;
+      }
+
+      button {
+        margin: 10px;
+      }
+
+      p {
+        font-size: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <p>Θέλω να...</p>
+      <div class="buttons">
+        <button type="button" class="button" onclick="window.location.href='./appointments.html'">Δω τα ραντεβού μου</button>
+        <button type="button" class="button" onclick="window.location.href='./register_vaccination.html'">Δηλώσω εμβολιασμό</button>
+        <button type="button" class="button" onclick="window.location.href='./enter_availability.html'">Εισάγω τη διαθεσιμότητα μου</button>
+      </div>
+    </div>
+    <button type="button" class="home_button" onclick="window.location.href='../main.html'">Home</button>
+  </body>
+</html>

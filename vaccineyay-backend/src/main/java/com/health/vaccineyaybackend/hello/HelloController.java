@@ -12,4 +12,11 @@ public class HelloController {
 	
 	@Autowired	
 	private HelloService hs;
+	
+	@GetMapping
+	public String helloworld() {
+		return "Welcome to the vaccination page";
+	}
+	
+	
 }
