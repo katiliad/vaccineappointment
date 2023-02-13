@@ -4,14 +4,14 @@ import java.util.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.web.bind.annotation.*;
 
-import com.health.vaccineyaybackend.hello.HelloService;
+import com.health.vaccineyaybackend.hello.VaccinationService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-public class HelloController {
+public class VaccinationController {
 	
 	@Autowired
-	private HelloService hs;
+	private VaccinationService hs;
 	
 	@GetMapping
 	public String helloworld() {
