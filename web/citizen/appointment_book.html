@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Vaccination appointments</title>
+  <style>
+      .home_button{
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: rgb(6, 70, 17);
+        border-radius: 15px;
+        padding:10px;
+        color: white;
+        display: inline-block;
+      }
+
+      button {
+        margin: 10px;
+      }
+  </style>
+</head>
+<body>
+    <script>
+        function search() {
+          const date = document.getElementById("date-input").value;
+          const url = `http://localhost:8080/timeslots?date=${date}`;
+          fetch(url)
+            .then(response => response.json())
+            .then(timeslots => {
+              const tableBody = document.querySelector("#timeslot-table tbody");
+              tableBody.innerHTML = "";
+              timeslots.forEach(timeslot => {
+                const row = tableBody.insertRow();
+                const startTimeCell = row.insertCell();
+                startTimeCell.textContent = timeslot.startTime;
+                const endTimeCell = row.insertCell();
+                endTimeCell.textContent = timeslot.endTime;
+              });
+            })
+            .catch(error => {
+              console.error("Error searching timeslots", error);
+              alert("Error searching timeslots");
+            });
+        }
+        function submitForm() {
+        const name = document.getElementById("name-input").value;
+        const surname = document.getElementById("surname-input").value;
+        const ssn = document.getElementById("ssn-input").value;
+        const taxNumber = document.getElementById("tax-number-input").value;
+        const email = document.getElementById("email-input").value;
+        const date = document.getElementById("date-input").value;
+        const hour = document.getElementById("hour-input").value;
+        const minutesStart = document.getElementById("minutes-start-input").value;
+        const minutesEnd = document.getElementById("minutes-end-input").value;
+        const startTime = `${hour}:${minutesStart}`;
+        const endTime = `${hour}:${minutesEnd}`;
+        const url = "http://localhost:8080/bookappointment";
+        const data = {
+            name,
+            surname,
+            ssn,
+            taxNumber,
+            email,
+            date,
+            startTime,
+            endTime
+        };
+        fetch(url, {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+            if (response.ok) {
+                alert("Appointment booked successfully");
+                document.querySelector("form").reset();
+            } else {
+                alert("Error booking appointment");
+            }
+            })
+            .catch(error => {
+            console.error("Error booking appointment", error);
+            alert("Error booking appointment");
+            });
+        }
+      </script>
+    <div>
+    <h1>Search for appointments</h1>
+  <label for="date-input">Date:</label>
+  <input type="date" id="date-input">
+  <button onclick="search()">Search</button>
+  <table id="timeslot-table">
+    <thead>
+      <tr>
+        <th>Start Time</th>
+        <th>End Time</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+  </div>
+  <div>
+<h1>Book an appointment</h1>
+<form>
+    <label for="name-input">Name:</label>
+    <input type="text" id="name-input" name="name" required>
+    <br>
+    <label for="surname-input">Surname:</label>
+    <input type="text" id="surname-input" name="surname" required>
+    <br>
+    <label for="ssn-input">SSN:</label>
+    <input type="text" id="ssn-input" name="ssn" required>
+    <br>
+    <label for="tax-number-input">Tax Number:</label>
+    <input type="text" id="tax-number-input" name="tax_number" required>
+    <br>
+    <label for="email-input">Email:</label>
+    <input type="email" id="email-input" name="email" required>
+    <br>
+    <label for="date-input">Date:</label>
+    <input type="date" id="date-input" name="date" required>
+    <br>
+    <label for="hour-input">Hour:</label>
+    <input type="number" id="hour-input" name="hour" min="0" max="23" required>
+    <br>
+    <label for="minutes-start-input">Start Minutes:</label>
+    <input type="number" id="minutes-start-input" name="minutes_start" min="0" max="59" required>
+    <br>
+    <label for="minutes-end-input">End Minutes:</label>
+    <input type="number" id="minutes-end-input" name="minutes_end" min="0" max="59" required>
+    <br>
+    <button type="button" onclick="submitForm()">Submit</button>
+  </form>
+  </div>
+  <button type="button" class="home_button" onclick="window.location.href='../main.html'">Home</button>
+
+</body>
+</html>
