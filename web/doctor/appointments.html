@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Get Next Appointments</title>
+  <style>
+    .home_button{
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: rgb(6, 70, 17);
+      border-radius: 15px;
+      padding:10px;
+      color: white;
+      display: inline-block;
+    }
+
+    button {
+      margin: 10px;
+    }
+</style>
+</head>
+<body>
+    <script>
+        function getNextAppointments() {
+          const docSsn = document.getElementById("doc-ssn-input").value;
+          const url = `http://localhost:8080/getnextappointments?doc_ssn=${docSsn}`;
+          fetch(url)
+            .then(response => {
+              if (response.ok) {
+                return response.json();
+              } else {
+                console.error("Failed to get next appointments", response);
+                alert("Failed to get next appointments");
+              }
+            })
+            .then(data => {
+              const tableBody = document.getElementById("appointment-table");
+              tableBody.innerHTML = "";
+              for (const entry of data) {
+                const row = document.createElement("tr");
+                const ssnCell = document.createElement("td");
+                const idCell = document.createElement("td");
+                ssnCell.textContent = entry.citizen_ssn;
+                idCell.textContent = entry.time_slot_id;
+                row.appendChild(ssnCell);
+                row.appendChild(idCell);
+                tableBody.appendChild(row);
+              }
+            })
+            .catch(error => {
+              console.error("Error getting next appointments", error);
+              alert("Error getting next appointments");
+            });
+        }
+      </script>
+      <h1> Get your future vaccination appointments</h1>
+  <label for="doc-ssn-input">Doctor SSN:</label>
+  <input type="text" id="doc-ssn-input" name="doc_ssn" required>
+  <br>
+  <button type="button" onclick="getNextAppointments()">Get Next Appointments</button>
+  <br>
+  <table>
+    <thead>
+      <tr>
+        <th>Citizen SSN</th>
+        <th>Time Slot ID</th>
+      </tr>
+    </thead>
+    <tbody id="appointment-table">
+    </tbody>
+  </table>
+  <button type="button" class="home_button" onclick="window.location.href='../main.html'">Home</button>
+
+</body>
+</html>
