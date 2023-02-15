@@ -25,7 +25,7 @@ public class VaccinationService {
 	public List<Timeslot> getAvailableTimeSlots(String date) throws Exception{
 		return timeSlotRepository.findByDate(date);
 	}
-	{
+	
 	public void bookAppointment(String name, String surname, String ssn, String tax_number, String email,
 			String day, String month, String year, String hour, String minutes_start, String minutes_end)
 	{
