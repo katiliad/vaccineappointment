@@ -20,6 +20,23 @@ public class Vaccination {
 		this.vaccination_date = vaccination_date;
 		this.expiration_date = expiration_date;
 	}
+	
+	
+	@OneToOne 
+	@JoinColumn (name = "doctor_doctor_social_security_number")
+	private Doctor doc;
+	 
+	 public void setDoctor (Doctor d) {
+		 doc=d;
+	 }
+	 
+	@OneToOne
+	@JoinColumn (name = "Citizen_social_security_number")
+		private Citizen citizen;
+		 
+	 public void setCitizen (Citizen c) {
+		 citizen=c;
+	 }
 
 	public Integer getCitizen_ssn() {
 		return citizen_ssn;

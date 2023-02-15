@@ -21,6 +21,13 @@ public class Citizen {
 		this.last_name = last_name;
 		this.email_address = email;
 	}
+	
+	@OneToOne (mappedBy = "social_security_number", cascade= CascadeType.ALL,fetch = FetchType.LAZY)
+	private Vaccination vac;
+	
+	public void setVaccination(Vaccination vacc) {
+		vac = vacc;
+	}
 
 	public Integer getSocial_security_number() {
 		return social_security_number;
