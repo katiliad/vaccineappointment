@@ -21,8 +21,8 @@ public class Vaccination {
 		this.expiration_date = expiration_date;
 	}
 	
-	
-	@OneToOne 
+
+	@ManyToOne 
 	@JoinColumn (name = "doctor_doctor_social_security_number")
 	private Doctor doc;
 	 

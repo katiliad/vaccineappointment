@@ -18,7 +18,6 @@ public class Timeslot {
 	private Integer start_hour;
 	private Integer end_minutes;
 	private Integer end_hour;
-	private Doctor doc;
 	
 	public Timeslot() {}
 	
@@ -38,6 +37,14 @@ public class Timeslot {
 	  
 	  slot_id = idGenerator(year, month, day, start_hour, start_minutes, end_hour, end_minutes);
 	}
+	
+	 @ManyToOne
+	 @JoinColumn (name = "doctor_social_security_number")
+	 private Doctor doc;
+	 
+	 public void setDoctor (Doctor d) {
+		 doc=d;
+	 }
 
 	public String getSlot_id() {
 		return slot_id;

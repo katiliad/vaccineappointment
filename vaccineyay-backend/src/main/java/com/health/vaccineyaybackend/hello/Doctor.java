@@ -9,15 +9,13 @@ public class Doctor {
 	private Integer doctor_social_security_number;
 	private String first_name;
 	private String last_name;
-	private List<Timeslot> tList = new ArrayList<Timeslot> ();
 	
 	public Doctor() {}
 	
-	public Doctor(Integer doctor_social_security_number, String first_name, String last_name, ArrayList<Timeslot> tList) {
+	public Doctor(Integer doctor_social_security_number, String first_name, String last_name) {
 		this.doctor_social_security_number = doctor_social_security_number;
 		this.first_name = first_name;
 		this.last_name = last_name;
-		this.tList = tList;
 	}
 	
 	@OneToMany (mappedBy = "doctor_social_security_number", cascade= CascadeType.ALL,fetch = FetchType.LAZY)
@@ -26,11 +24,18 @@ public class Doctor {
 	public void addAppointment (Appointment apmnt) {
 		appointments.add(apmnt);
 	}
-	@OneToOne (mappedBy = "doctor_social_security_number", cascade= CascadeType.ALL,fetch = FetchType.LAZY)
-	private Vaccination vac;
+	@OneToMany (mappedBy = "doctor_social_security_number", cascade= CascadeType.ALL,fetch = FetchType.LAZY)
+	private List <Vaccination> vacList = new ArrayList <Vaccination>();
 	
-	public void setVaccination(Vaccination vacc) {
-		vac = vacc;
+	public void addVaccination(Vaccination vacc) {
+		vacList.add(vacc);
+	}
+	
+	@OneToMany (mappedBy = "doctor_social_security_number", cascade= CascadeType.ALL,fetch = FetchType.LAZY)
+	private List <Timeslot> timeslots = new ArrayList <Timeslot>();
+	
+	public void addTimeslot (Timeslot time_slot) {
+		timeslots.add(time_slot);
 	}
 
 	public Integer getSocial_security_number() {
@@ -45,8 +50,16 @@ public class Doctor {
 		return last_name;
 	}
 
-	public List<Timeslot> gettList() {
-		return tList;
+	public List<Timeslot> getTimeSlotsList() {
+		return timeslots;
+	}
+	
+	public List<Appointment> getAppointments(){
+		return appointments;
+	}
+	
+	public List<Vaccination> getVaccinations(){
+		return vacList;
 	}
 
 	

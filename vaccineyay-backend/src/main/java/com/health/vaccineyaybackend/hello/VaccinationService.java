@@ -19,6 +19,8 @@ public class VaccinationService {
 	private TimeslotRepository timeSlotRepository;
 	@Autowired
 	private VaccinationRepository vaxRepository;
+	@Autowired
+	private DoctorRepository docRepository;
 	
 	public List<Timeslot> getAvailableTimeSlots(String date) throws Exception{
 		return timeSlotRepository.findByDate(date);
@@ -62,5 +64,48 @@ public class VaccinationService {
 			  }  
 		  }
 	}
+	
+	public void enterAvailability(String first_name, String last_name, String doc_ssn, 
+			String day, String month, String year, String starting_hour,
+			String starting_min, String ending_min)
+	{
+		Doctor doc = new Doctor(Integer.valueOf(doc_ssn), first_name, last_name);
+		Timeslot t_slot = new Timeslot(Integer.valueOf(year), Integer.valueOf(month),
+				Integer.valueOf(day), Integer.valueOf(starting_min), 
+				Integer.valueOf(starting_hour), Integer.valueOf(ending_min),
+				Integer.valueOf(starting_hour));
+		//doc.addTimeslot(t_slot);
+		t_slot.setDoctor(doc);
+//		Optional<Doctor> doc_byId = docRepository.findById(Integer.valueOf(doc_ssn));
+//		if(!doc_byId.isPresent()) {
+//			docRepository.save(doc);
+//		} 
+		
+		 String time_slot_id = Timeslot.idGenerator(Integer.valueOf(year), Integer.valueOf(month), 
+				  Integer.valueOf(day), Integer.valueOf(starting_hour), Integer.valueOf(starting_min),
+				  Integer.valueOf(starting_hour), Integer.valueOf(ending_min));
+		 
+		Optional<Timeslot> tslot_byId = timeSlotRepository.findById(time_slot_id);
+		if(!tslot_byId.isPresent()) {
+			timeSlotRepository.save(t_slot);
+		} 
+	}
+	
+	public Optional<Vaccination> getVaccinationStatus(String citizen_ssn) {
+		return vaxRepository.findById(Integer.valueOf(citizen_ssn));
+	}
+	
+	public List<Appointment> getNextAppointments(String doctor_ssn) {
+		  Optional<Doctor> byId = docRepository.findById(Integer.valueOf(doctor_ssn));
+		  if(byId.isPresent()) {
+			  return byId.get().getAppointments();
+		  } else {
+			  return new ArrayList<Appointment>();
+		  }
+	}
+	
+	
+	
+	
 
 }
