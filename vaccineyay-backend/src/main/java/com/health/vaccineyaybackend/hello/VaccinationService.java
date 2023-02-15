@@ -25,7 +25,7 @@ public class VaccinationService {
 	public List<Timeslot> getAvailableTimeSlots(String date) throws Exception{
 		return timeSlotRepository.findByDate(date);
 	}
-	
+	{
 	public void bookAppointment(String name, String surname, String ssn, String tax_number, String email,
 			String day, String month, String year, String hour, String minutes_start, String minutes_end)
 	{
@@ -104,17 +104,17 @@ public class VaccinationService {
 		  }
 	}
 	
-	public void changeAppointment(String name, String surname, String ssn, String tax_number, String email,
+	public boolean changeAppointment(String name, String surname, String ssn, String tax_number, String email,
 			String day, String month, String year, String hour, String minutes_start, String minutes_end)
 	{
 		  Optional<Citizen> byId = citizenRepository.findById(Integer.valueOf(ssn));
 		  if(!byId.isPresent()) {
-			  return;			  
+			  return false;			  
 		  }
 		  
 		  Citizen citizen = byId.get();
 		  if(citizen.getChangedAppointments()>2) {
-			  return;
+			  return false;
 		  }
 		  
 		  Optional<Appointment> appnt = appointmentRepository.findById(Integer.valueOf(ssn));
@@ -132,12 +132,9 @@ public class VaccinationService {
 			  if(!appt_byId.isPresent()) {
 				  appointmentRepository.save(new Appointment(Integer.valueOf(ssn), Integer.valueOf(time_slot_id)));
 				  citizen.increaseChangedAppointments();
+				  return true;
 			  }
 		  }	  
+		  return false;
 	}
-	
-	
-	
-	
-
 }
