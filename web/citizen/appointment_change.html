@@ -26,24 +26,27 @@
         const name = document.getElementById("name-input").value;
         const surname = document.getElementById("surname-input").value;
         const ssn = document.getElementById("ssn-input").value;
-        const taxNumber = document.getElementById("tax-number-input").value;
+        const tax_number = document.getElementById("tax-number-input").value;
         const email = document.getElementById("email-input").value;
-        const date = document.getElementById("date-input").value;
+        const day = document.getElementById("day-input").value;
+        const month = document.getElementById("month-input").value;
+        const year = document.getElementById("year-input").value;
         const hour = document.getElementById("hour-input").value;
-        const minutesStart = document.getElementById("minutes-start-input").value;
-        const minutesEnd = document.getElementById("minutes-end-input").value;
-        const startTime = `${hour}:${minutesStart}`;
-        const endTime = `${hour}:${minutesEnd}`;
+        const minutes_start = document.getElementById("minutes-start-input").value;
+        const minutes_end = document.getElementById("minutes-end-input").value;
         const url = "http://localhost:8080/changeappointment";
         const data = {
             name,
             surname,
             ssn,
-            taxNumber,
+            tax_number,
             email,
-            date,
-            startTime,
-            endTime
+            day,
+            month,
+            year,
+            hour,
+            minutes_start,
+            minutes_end,
         };
         fetch(url, {
             method: "POST",
@@ -85,8 +88,14 @@
     <label for="email-input">Email:</label>
     <input type="email" id="email-input" name="email" required>
     <br>
-    <label for="date-input">Date:</label>
-    <input type="date" id="date-input" name="date" required>
+    <label for="day-input">Day:</label>
+    <input type="day" id="day-input" name="day" required>
+    <br>
+    <label for="month-input">Month:</label>
+    <input type="month" id="month-input" name="month" required>
+    <br>
+    <label for="year-input">Year:</label>
+    <input type="year" id="year-input" name="year" required>
     <br>
     <label for="hour-input">Hour:</label>
     <input type="number" id="hour-input" name="hour" min="0" max="23" required>

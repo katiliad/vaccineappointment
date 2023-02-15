@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Check Vaccination Status</title>
+  <style>
+    .home_button{
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: rgb(6, 70, 17);
+      border-radius: 15px;
+      padding:10px;
+      color: white;
+      display: inline-block;
+    }
+
+    button {
+      margin: 10px;
+    }
+</style>
+</head>
+<body>
+    <script>
+        function getStatus() {
+          const citizen_ssn = document.getElementById("ssn-input").value;
+          const url = `http://localhost:8080/getvaccinationstatus?citizen_ssn=${citizen_ssn}`;
+          fetch(url)
+            .then(response => response.json())
+            .then(data => {
+              const tableBody = document.getElementById("status-table-body");
+              const row = tableBody.insertRow();
+              const citizenCell = row.insertCell();
+              const doctorCell = row.insertCell();
+              const vaccinationDateCell = row.insertCell();
+              const expirationDateCell = row.insertCell();
+              citizenCell.innerText = data.citizen_ssn;
+              doctorCell.innerText = data.doctor_ssn;
+              vaccinationDateCell.innerText = data.vaccination_date;
+              expirationDateCell.innerText = data.expiration_date;
+            })
+            .catch(error => {
+              console.error("Error getting status", error);
+              alert("Error getting status");
+            });
+        }
+      </script>
+  <label for="ssn-input">Enter your Social Security Number:</label>
+  <input type="text" id="ssn-input" name="ssn" required>
+  <br>
+  <button type="button" onclick="getStatus()">Get Vaccination Status</button>
+  <br>
+  <br>
+  <table>
+    <thead>
+      <tr>
+        <th>Citizen Social Security Number</th>
+        <th>Doctor Social Security Number</th>
+        <th>Vaccination Date</th>
+        <th>Expiration Date</th>
+      </tr>
+    </thead>
+    <tbody id="status-table-body">
+    </tbody>
+  </table>
+ 
+    <button type="button" class="home_button" onclick="window.location.href='../main.html'">Home</button>
+</body>
+</html>
