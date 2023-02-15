@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Enter Availability</title>
+  <style>
+    .home_button{
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: rgb(6, 70, 17);
+      border-radius: 15px;
+      padding:10px;
+      color: white;
+      display: inline-block;
+    }
+
+    button {
+      margin: 10px;
+    }
+</style>
+</head>
+<body>
+    <script>
+        function submitAvailability() {
+          const firstName = document.getElementById("first-name-input").value;
+          const lastName = document.getElementById("last-name-input").value;
+          const docSsn = document.getElementById("doc-ssn-input").value;
+          const day = document.getElementById("day-input").value;
+          const month = document.getElementById("month-input").value;
+          const year = document.getElementById("year-input").value;
+          const startingHour = document.getElementById("starting-hour-input").value;
+          const startingMin = document.getElementById("starting-min-input").value;
+          const endingMin = document.getElementById("ending-min-input").value;
+          const data = { first_name: firstName, last_name: lastName, doc_ssn: docSsn, day, month, year, starting_hour: startingHour, starting_min: startingMin, ending_min: endingMin };
+          const url = "http://localhost:8080/enteravailability";
+          fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+          })
+            .then(response => {
+              if (response.ok) {
+                alert("Availability submitted successfully");
+              } else {
+                console.error("Failed to submit availability", response);
+                alert("Failed to submit availability");
+              }
+            })
+            .catch(error => {
+              console.error("Error submitting availability", error);
+              alert("Error submitting availability");
+            });
+        }
+      </script>
+      <h1>Enter your availability</h1>
+  <label for="first-name-input">First Name:</label>
+  <input type="text" id="first-name-input" name="first_name" required>
+  <br>
+  <label for="last-name-input">Last Name:</label>
+  <input type="text" id="last-name-input" name="last_name" required>
+  <br>
+  <label for="doc-ssn-input">Doctor SSN:</label>
+  <input type="text" id="doc-ssn-input" name="doc_ssn" required>
+  <br>
+  <label for="day-input">Day:</label>
+  <input type="text" id="day-input" name="day" required>
+  <br>
+  <label for="month-input">Month:</label>
+  <input type="text" id="month-input" name="month" required>
+  <br>
+  <label for="year-input">Year:</label>
+  <input type="text" id="year-input" name="year" required>
+  <br>
+  <label for="starting-hour-input">Starting Hour:</label>
+  <input type="text" id="starting-hour-input" name="starting_hour" required>
+  <br>
+  <label for="starting-min-input">Starting Minute:</label>
+  <input type="text" id="starting-min-input" name="starting_min" required>
+  <br>
+  <label for="ending-min-input">Ending Minute:</label>
+  <input type="text" id="ending-min-input" name="ending_min" required>
+  <br>
+  <button type="button" onclick="submitAvailability()">Submit Availability</button>
+  <br>
+  <button type="button" class="home_button" onclick="window.location.href='../main.html'">Home</button>
+
+</body>
+</html>
