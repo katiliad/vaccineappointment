@@ -8,6 +8,6 @@ public class VaccinationCenter {
 	@Id
 	private Integer id;
 	private String address;
-	private ArrayList<Timeslot> tList;
+	private List<Timeslot> tList = new ArrayList<Timeslot> ();
 	
 }
