@@ -31,7 +31,7 @@ public class Vaccination {
 	 }
 	 
 	@OneToOne
-	@JoinColumn (name = "Citizen_social_security_number")
+	@JoinColumn (name = "citizen_social_security_number")
 		private Citizen citizen;
 		 
 	 public void setCitizen (Citizen c) {

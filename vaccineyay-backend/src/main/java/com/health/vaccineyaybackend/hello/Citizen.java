@@ -11,6 +11,7 @@ public class Citizen {
 	private String first_name;
 	private String last_name;
 	private String email_address;
+	private Integer changed_appointments;
 	
 	public Citizen() {}
 	
@@ -20,6 +21,7 @@ public class Citizen {
 		this.first_name = name;
 		this.last_name = last_name;
 		this.email_address = email;
+		this.changed_appointments = 0;
 	}
 	
 	@OneToOne (mappedBy = "social_security_number", cascade= CascadeType.ALL,fetch = FetchType.LAZY)
@@ -47,6 +49,14 @@ public class Citizen {
 
 	public String getEmail_address() {
 		return email_address;
+	}
+	
+	public int getChangedAppointments() {
+		return changed_appointments;
+	}
+	
+	public void increaseChangedAppointments() {
+		changed_appointments++;
 	}
 
 }

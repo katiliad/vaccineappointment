@@ -104,6 +104,38 @@ public class VaccinationService {
 		  }
 	}
 	
+	public void changeAppointment(String name, String surname, String ssn, String tax_number, String email,
+			String day, String month, String year, String hour, String minutes_start, String minutes_end)
+	{
+		  Optional<Citizen> byId = citizenRepository.findById(Integer.valueOf(ssn));
+		  if(!byId.isPresent()) {
+			  return;			  
+		  }
+		  
+		  Citizen citizen = byId.get();
+		  if(citizen.getChangedAppointments()>2) {
+			  return;
+		  }
+		  
+		  Optional<Appointment> appnt = appointmentRepository.findById(Integer.valueOf(ssn));
+		  if(appnt.isPresent()) {
+			  appointmentRepository.delete(appnt.get());
+		  }
+		  
+		  String time_slot_id = Timeslot.idGenerator(Integer.valueOf(year), Integer.valueOf(month), 
+				  Integer.valueOf(day), Integer.valueOf(hour), Integer.valueOf(minutes_start),
+				  Integer.valueOf(hour), Integer.valueOf(minutes_end));
+		  
+		  Optional<Timeslot> slot_byId = timeSlotRepository.findById(time_slot_id);
+		  if(slot_byId.isPresent()) {
+			  Optional<Appointment> appt_byId = appointmentRepository.findById(Integer.valueOf(ssn));
+			  if(!appt_byId.isPresent()) {
+				  appointmentRepository.save(new Appointment(Integer.valueOf(ssn), Integer.valueOf(time_slot_id)));
+				  citizen.increaseChangedAppointments();
+			  }
+		  }	  
+	}
+	
 	
 	
 	
