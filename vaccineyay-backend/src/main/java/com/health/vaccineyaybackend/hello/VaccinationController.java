@@ -16,12 +16,12 @@ public class VaccinationController {
 		return "Welcome to the vaccination page";
 	}
 	
-	@GetMapping(path="/timeslots/{date}")
+	@GetMapping(path="/timeslots")
 	public List<Timeslot> getTimeSlots(@RequestParam(value="date") String date)  throws Exception{
 		return vs.getAvailableTimeSlots(date);
 	}
 	
-	@PostMapping(path="/bookappointment/{name}/{surname}/{ssn}/{tax_number}/{email}/{day}/{month}/{year}/{hour}/{minutes_start}/{minutes_end}")
+	@PostMapping(path="/bookappointment")
 	public void bookAppointment(@RequestParam(value="name") String name, @RequestParam(value="surname") String surname, 
 			@RequestParam(value="ssn") String ssn, @RequestParam(value="tax_number") String tax_number, 
 			@RequestParam(value="email") String email, @RequestParam(value="day") String day, 
@@ -32,7 +32,7 @@ public class VaccinationController {
 		vs.bookAppointment(name, surname, ssn, tax_number, email, day, month, year, hour, minutes_start, minutes_end);
 	}
 	
-	@PostMapping(path="/registervaccination/{name}/{surname}/{ssn}/{doctor_ssn}/{Day}/{Month}/{Year}")
+	@PostMapping(path="/registervaccination")
 	public void registerVaccination(@RequestParam(value="name") String name, @RequestParam(value="surname") String surname, 
 			@RequestParam(value="ssn") String ssn, @RequestParam(value="doctor_ssn") String doctor_ssn, 
 			@RequestParam(value="Day") String Day, @RequestParam(value="Month") String Month, 
@@ -41,7 +41,7 @@ public class VaccinationController {
 		vs.registerVaccination(name, surname, ssn, doctor_ssn, Day, Month, Year);
 	}
 	
-	@PostMapping(path="/enteravailability/{first_name}/{last_name}/{doc_ssn}/{day}/{month}/{year}/{starting_hour}{starting_min}/{ending_min}")
+	@PostMapping(path="/enteravailability")
 	public void enterAvailability(@RequestParam(value="first_name") String first_name, @RequestParam(value="last_name") String last_name, 
 			@RequestParam(value="doc_ssn") String doc_ssn, @RequestParam(value="day") String day, 
 			@RequestParam(value="month") String month, @RequestParam(value="year") String year, 
@@ -51,17 +51,17 @@ public class VaccinationController {
 		vs.enterAvailability(first_name, last_name, doc_ssn, day, month, year, starting_hour, starting_min, ending_min);
 	}
 	
-	@GetMapping(path="/getvaccinationstatus/{citizen_ssn}")
+	@GetMapping(path="/getvaccinationstatus")
 	public Vaccination getVaccinationAppointment(@RequestParam(value="citizen_ssn") String citizen_ssn) {
 		return vs.getVaccinationStatus(citizen_ssn).get();
 	}
 	
-	@GetMapping(path="/getnextappointments/{doctor_ssn}")
+	@GetMapping(path="/getnextappointments")
 	public List<Appointment> getNextAppointments(@RequestParam(value="doctor_ssn") String doctor_ssn) {
 		return vs.getNextAppointments(doctor_ssn);
 	}
 	
-	@PostMapping(path="/changeappointment/{name}/{surname}/{ssn}/{tax_number}/{email}/{day}/{month}/{year}/{hour}/{minutes_start}/{minutes_end}")
+	@PostMapping(path="/changeappointment")
 	public boolean changeAppointment(@RequestParam(value="name") String name, @RequestParam(value="surname") String surname, 
 			@RequestParam(value="ssn") String ssn, @RequestParam(value="tax_number") String tax_number, 
 			@RequestParam(value="email") String email, @RequestParam(value="day") String day, 
